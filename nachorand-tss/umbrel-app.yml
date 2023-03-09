@@ -1,11 +1,11 @@
 manifestVersion: 1
 id: nachorand-tss
-port: 6969
+port: 10011
 name: TeamSpeak Server
 tagline: TeamSpeak Server in Umbrel
 icon: https://teamspeak.com/user/themes/teamspeak/images/favicon.png
 category: Social
-version: "0.0.5"
+version: "0.0.6"
 description: >-
   Use crystal clear sound to communicate with your team mates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.
 developer: Nacho
@@ -15,9 +15,9 @@ submission: https://github.com/nachoaIvarez/umbrel-app-store
 repo: https://github.com/nachoaIvarez/umbrel-app-store
 support: https://github.com/nachoaIvarez/umbrel-app-store/issues
 gallery:
-  - https://camo.githubusercontent.com/79542d1f2d69354dc9d3638cdb053b45cb02352de4465dda627a8c77a2c8c7c3/68747470733a2f2f692e696d6775722e636f6d2f75503358674b692e706e67
+  - https://upload.wikimedia.org/wikipedia/commons/b/be/TeamSpeak_3.5.5_on_Windows_10.png
 releaseNotes: >-
-  Use appropriate teamspeak image.
+  Declutter services, just ts3.
 dependencies: []
 path: ""
 defaultUsername: ""
