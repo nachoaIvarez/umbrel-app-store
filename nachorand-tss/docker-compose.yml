@@ -23,6 +23,8 @@ services:
       TS3SERVER_DB_NAME: teamspeak
       TS3SERVER_DB_WAITUNTILREADY: 30
       TS3SERVER_LICENSE: accept
+    depends_on:
+      - db
   db:
     image: mariadb
     restart: on-failure
@@ -38,3 +40,5 @@ services:
     environment:
       WHITELIST: server
       JWT_SECRET: ts3jwts
+    depends_on:
+      - server
