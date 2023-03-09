@@ -5,7 +5,7 @@ name: TeamSpeak Server
 tagline: TeamSpeak Server in Umbrel
 icon: https://teamspeak.com/user/themes/teamspeak/images/favicon.png
 category: Social
-version: "0.0.2"
+version: "0.0.3"
 description: >-
   Use crystal clear sound to communicate with your team mates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.
 developer: Nacho
@@ -17,8 +17,8 @@ support: https://github.com/nachoaIvarez/umbrel-app-store/issues
 gallery:
   - https://camo.githubusercontent.com/79542d1f2d69354dc9d3638cdb053b45cb02352de4465dda627a8c77a2c8c7c3/68747470733a2f2f692e696d6775722e636f6d2f75503358674b692e706e67
 releaseNotes: >-
-  Added TS3 Manager.
+  Remove deterministic password.
 dependencies: []
 path: ""
 defaultUsername: ""
-deterministicPassword: true
+defaultPassword: ""
