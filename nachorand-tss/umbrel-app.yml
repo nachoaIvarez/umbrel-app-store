@@ -1,6 +1,6 @@
 manifestVersion: 1
 id: nachorand-tss
-port: 6666
+port: 6969
 name: TeamSpeak Server
 tagline: TeamSpeak Server in Umbrel
 icon: https://teamspeak.com/user/themes/teamspeak/images/favicon.png
