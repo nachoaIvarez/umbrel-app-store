@@ -1,14 +1,13 @@
 version: "3.7"
 
 services:
-
   app_proxy:
     environment:
       # The format here is: <app-id>_<docker-service-name>_1
-      APP_HOST: nachorand-tss_server_1
-    
+      APP_HOST: nachorand-tss_ts3_1
+      APP_PORT: 6666
+
   server:
-    user: "1000:1000"
     image: teamspeak
     restart: on-failure
     ports:
@@ -30,3 +29,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: tsdbpw
       MYSQL_DATABASE: teamspeak
+  ts3:
+    image: "joni1802/ts3-manager"
+    restart: on-failure
+    user: "1000:1000"
+    ports:
+      - 6666:8080
+    environment:
+      WHITELIST: server
+      JWT_SECRET: ts3jwts
