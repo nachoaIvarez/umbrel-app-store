@@ -21,8 +21,8 @@ services:
       - ./server-entrypoint.sh:/entrypoint.sh
     entrypoint: /bin/sh /entrypoint.sh
     healthcheck:
-      test: ["CMD-SHELL", "if [ -z $TOKEN ]; then exit 1; fi"]
-      interval: 30s
+      test: if [ -z $TOKEN ]; then exit 1; fi
+      interval: 10s
       timeout: 10s
       retries: 666
 
