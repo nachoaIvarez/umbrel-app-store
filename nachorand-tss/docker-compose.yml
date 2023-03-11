@@ -17,7 +17,7 @@ services:
     environment:
       - TS3SERVER_LICENSE: accept
       - TOKEN=
-    entrypoint: >
+    entrypoint: |
       /bin/sh -c '
       while [ -z "$TOKEN" ]; do
         echo "Waiting for logs..."
