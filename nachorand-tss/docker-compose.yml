@@ -18,14 +18,14 @@ services:
       - TS3SERVER_LICENSE=accept
       - TOKEN=
     volumes:
-      - ./server-entrypoint.sh:/entrypoint.sh
-    entrypoint: /bin/sh /entrypoint.sh
+      - ./server-command.sh:/command.sh
+    command: /command.sh
 
   web:
     image: nginx:alpine
     user: "1000:1000"
     environment:
-      - TOKEN
+      - ${TOKEN}
     volumes:
       - ./html:/usr/share/nginx/html
     depends_on:
