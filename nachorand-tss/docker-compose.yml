@@ -20,11 +20,6 @@ services:
     volumes:
       - ./server-entrypoint.sh:/entrypoint.sh
     entrypoint: /bin/sh /entrypoint.sh
-    healthcheck:
-      test: if [ -z $TOKEN ]; then exit 1; fi
-      interval: 10s
-      timeout: 10s
-      retries: 666
 
   web:
     image: nginx:alpine
@@ -33,6 +28,4 @@ services:
       - TOKEN
     volumes:
       - ./html:/usr/share/nginx/html
-    depends_on:
-      server:
-        condition: service_healthy
+    depends_on: server
