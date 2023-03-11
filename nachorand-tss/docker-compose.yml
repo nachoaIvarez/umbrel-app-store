@@ -19,7 +19,7 @@ services:
       - TOKEN=
     volumes:
       - ./server-entrypoint.sh:/entrypoint.sh
-    entrypoint: /entrypoint.sh
+    entrypoint: chmod +x /entrypoint.sh && /entrypoint.sh
 
   web:
     image: nginx:alpine
