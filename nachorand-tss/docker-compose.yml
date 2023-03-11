@@ -28,4 +28,5 @@ services:
       - TOKEN
     volumes:
       - ./html:/usr/share/nginx/html
-    depends_on: server
+    depends_on:
+      - server
