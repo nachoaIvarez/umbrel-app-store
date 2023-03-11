@@ -25,9 +25,8 @@ services:
     image: nginx:alpine
     user: "1000:1000"
     environment:
-      - ${TOKEN}
+      TOKEN: ${TOKEN}
     volumes:
       - ./html:/usr/share/nginx/html
     depends_on:
-      server:
-        condition: service_healthy
+      - server
