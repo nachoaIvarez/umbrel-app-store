@@ -18,8 +18,8 @@ services:
       - TS3SERVER_LICENSE=accept
       - TOKEN=
     volumes:
-      - ./server-command.sh:/command.sh
-    command: /command.sh
+      - ./server-entrypoint.sh:/entrypoint.sh
+    entrypoint: /entrypoint.sh
 
   web:
     image: nginx:alpine
