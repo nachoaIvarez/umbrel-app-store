@@ -17,7 +17,7 @@ services:
     environment:
       - TS3SERVER_LICENSE: accept
       - TOKEN=
-    entrypoint: "/bin/sh -c 'while [ -z \"$TOKEN\" ]; do echo \"Waiting for logs...\"; sleep 1; export TOKEN=$(grep -m1 -h -oP \"token=\\K\\S+\" /teamspeak/logs/*); done'"
+    entrypoint: /bin/sh -c \'while [ -z \"$TOKEN\" ]; do echo \"Waiting for logs...\"; sleep 1; export TOKEN=$(grep -m1 -h -oP \"token=\\K\\S+\" /teamspeak/logs/*); done\'
 
   web:
     image: nginx:alpine
