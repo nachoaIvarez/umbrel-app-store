@@ -17,7 +17,9 @@ services:
     environment:
       - TS3SERVER_LICENSE: accept
       - TOKEN=
-    entrypoint: /bin/sh -c \'while [ -z \"$TOKEN\" ]; do echo \"Waiting for logs...\"; sleep 1; export TOKEN=$(grep -m1 -h -oP \"token=\\K\\S+\" /teamspeak/logs/*); done\'
+    volumes:
+      - ./server-entrypoint.sh:/entrypoint.sh
+    entrypoint: /bin/sh /entrypoint.sh
 
   web:
     image: nginx:alpine
@@ -25,7 +27,7 @@ services:
     environment:
       - TOKEN
     volumes:
-      - ./data:/usr/share/nginx/html
+      - ./html:/usr/share/nginx/html
     depends_on:
       server:
         condition: service_healthy
