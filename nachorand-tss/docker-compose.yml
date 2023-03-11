@@ -15,11 +15,8 @@ services:
       - 10011:10011
       - 30033:30033
     environment:
-      - TS3SERVER_LICENSE=accept
-      - TOKEN=
-    volumes:
-      - ./server-entrypoint.sh:/entrypoint.sh
-    entrypoint: chmod +x /entrypoint.sh && /entrypoint.sh
+      TS3SERVER_LICENSE: accept
+      TS3SERVER_PRIVILEGE_KEY: $APP_PASSWORD
 
   web:
     image: nginx:alpine
