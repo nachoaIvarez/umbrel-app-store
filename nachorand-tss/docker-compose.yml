@@ -18,8 +18,8 @@ services:
       - TS3SERVER_LICENSE=accept
     volumes:
       - ./data/privilege-key.txt:/teamspeak/privilege-key.txt
-      - ./server-command.sh:/command.sh
-    command: sh -c "chmod +x /command.sh && sudo -E /command.sh"
+      - ./server-command.sh:/teamspeak/sh/command.sh
+    command: /teamspeak/sh/command.sh
     healthcheck:
       test: "[ -f /teamspeak/privilege-key.txt ]"
       interval: 1s
@@ -32,8 +32,8 @@ services:
     restart: on-failure
     volumes:
       - ./data:/usr/share/nginx/html
-      - ./web-command.sh:/command.sh
-    command: sh -c "chmod +x /command.sh && sudo -E /command.sh"
+      - ./web-command.sh:/usr/share/nginx/sh/command.sh
+    command: /usr/share/nginx/sh/command.sh
     depends_on:
       server:
         condition: service_healthy
