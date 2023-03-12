@@ -19,7 +19,7 @@ services:
     volumes:
       - ./data/privilege-key.txt:/teamspeak/privilege-key.txt
       - ./server-command.sh:/command.sh
-    command: chmod +x /command.sh && /command.sh
+    command: sh -c "chmod +x /command.sh && /command.sh"
     healthcheck:
       test: "[ -f /teamspeak/privilege-key.txt ]"
       interval: 1s
@@ -33,7 +33,7 @@ services:
     volumes:
       - ./data:/usr/share/nginx/html
       - ./web-command.sh:/command.sh
-    command: chmod +x /command.sh && /command.sh
+    command: sh -c "chmod +x /command.sh && /command.sh"
     depends_on:
       server:
         condition: service_healthy
