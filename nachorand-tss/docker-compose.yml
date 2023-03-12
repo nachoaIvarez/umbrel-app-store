@@ -23,7 +23,7 @@ services:
     healthcheck:
       test: "[ -f /teamspeak/privilege-key.txt ]"
       interval: 1s
-      timeout: 10s
+      timeout: 600s
       retries: 600
 
   web:
