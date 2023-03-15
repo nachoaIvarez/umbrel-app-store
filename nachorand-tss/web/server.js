@@ -1,60 +1,56 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+
 const app = express();
+const serverHost = process.env.SERVER_HOST || "localhost";
+const port = process.env.PORT || 8326;
+const logsPath = "/logs";
 
-const logsDir = "/logs";
+app.get("/", async (req, res) => {
+  const logs = await getLogs();
+  const privilegeKey = logs.match(/token=(\S+)/)[1];
 
-async function fetchPrivilegeKey() {
-  return new Promise((resolve, reject) => {
-    fs.readdir(logsDir, (err, files) => {
-      if (err) {
-        reject(err);
-        return;
-      }
+  fs.readFile("index.html", "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+      return;
+    }
 
-      const logFile = path.join(logsDir, files[0]);
+    const html = data.replace("${PRIVILEGE_KEY}", privilegeKey);
+    res.send(html);
+  });
+});
 
-      fs.readFile(logFile, "utf8", (err, data) => {
-        if (err) {
+function getLogs() {
+  return new Promise(async (resolve, reject) => {
+    const checkLogs = setInterval(async () => {
+      try {
+        const logFiles = await fs.promises.readdir(logsPath);
+        const logs = [];
+        for (const logFile of logFiles) {
+          const logData = await fs.promises.readFile(
+            path.join(logsPath, logFile),
+            "utf8"
+          );
+          logs.push(logData);
+          if (logData.includes("token=")) {
+            clearInterval(checkLogs);
+            resolve(logs.join("\n"));
+            return;
+          }
+        }
+      } catch (err) {
+        if (err.code !== "ENOENT") {
+          clearInterval(checkLogs);
           reject(err);
-          return;
         }
-
-        const privilegeKeyMatch = data.match(/token=([a-zA-Z0-9+\/_]+)/);
-
-        if (privilegeKeyMatch) {
-          resolve(privilegeKeyMatch[1]);
-        } else {
-          reject(new Error("Privilege Key not found in logs."));
-        }
-      });
-    });
+      }
+    }, 1000);
   });
 }
 
-app.get("/", async (req, res) => {
-  try {
-    const privilegeKey = await fetchPrivilegeKey();
-    const indexPath = path.join(__dirname, "index.html");
-    fs.readFile(indexPath, "utf8", (err, htmlContent) => {
-      if (err) {
-        res.status(500).send("Error reading index.html: " + err.message);
-        return;
-      }
-
-      const interpolatedHtml = htmlContent.replace(
-        "${PRIVILEGE_KEY}",
-        privilegeKey
-      );
-      res.send(interpolatedHtml);
-    });
-  } catch (error) {
-    res.status(500).send("Error fetching Privilege Key: " + error.message);
-  }
-});
-
-const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Web server listening on port ${port}`);
 });
