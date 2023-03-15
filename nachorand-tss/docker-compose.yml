@@ -5,11 +5,11 @@ services:
     environment:
       # The format here is: <app-id>_<docker-service-name>_1
       APP_HOST: nachorand-tss_web_1
-      APP_PORT: 80
+      APP_PORT: 8326
 
   server:
     image: ertagh/teamspeak3-server
-    restart: on-failure
+    restart: always
     ports:
       - 9987:9987/udp
       - 10011:10011
@@ -17,23 +17,18 @@ services:
     environment:
       - TS3SERVER_LICENSE=accept
     volumes:
-      - ./data/privilege-key.txt:/teamspeak/privilege-key.txt
-      - ./server-command.sh:/teamspeak/sh/command.sh
-    command: sh -c "chmod +x /teamspeak/sh/command.sh && /teamspeak/sh/command.sh"
-    healthcheck:
-      test: "[ -f /teamspeak/privilege-key.txt ]"
-      interval: 1s
-      timeout: 600s
-      retries: 600
+      - ./logs:/teamspeak/logs
 
   web:
-    image: nginx:1.21-alpine@sha256:686aac2769fd6e7bab67663fd38750c135b72d993d0bb0a942ab02ef647fc9c3
-    init: true
-    restart: on-failure
-    volumes:
-      - ./data:/usr/share/nginx/html
-      - ./web-command.sh:/usr/share/nginx/sh/command.sh
-    command: sh -c "chmod +x /usr/share/nginx/sh/command.sh && /usr/share/nginx/sh/command.sh"
+    image: node:16-alpine
+    restart: always
     depends_on:
-      server:
-        condition: service_healthy
+      - server
+    volumes:
+      - ./web:/app
+      - ./logs:/logs
+    working_dir: /app
+    command: sh -c "npm install && node server.js"
+    environment:
+      - SERVER_HOST=server
+      - PORT=8326

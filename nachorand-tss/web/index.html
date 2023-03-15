@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>TeamSpeak Server</title>
+    <link rel="shortcut icon" type="image/jpg" href="favicon.png" />
     <style>
       /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
       html {
@@ -259,8 +260,81 @@
         padding: 0;
         margin: 0;
       }
+
+      .copy-button {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 5px;
+        font-size: 20px;
+      }
+
+      .toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 10px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+      }
+
+      .toast.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+
+      @-webkit-keyframes fadein {
+        from {
+          bottom: 0;
+          opacity: 0;
+        }
+        to {
+          bottom: 30px;
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadein {
+        from {
+          bottom: 0;
+          opacity: 0;
+        }
+        to {
+          bottom: 30px;
+          opacity: 1;
+        }
+      }
+
+      @-webkit-keyframes fadeout {
+        from {
+          bottom: 30px;
+          opacity: 1;
+        }
+        to {
+          bottom: 0;
+          opacity: 0;
+        }
+      }
+
+      @keyframes fadeout {
+        from {
+          bottom: 30px;
+          opacity: 1;
+        }
+        to {
+          bottom: 0;
+          opacity: 0;
+        }
+      }
     </style>
-    <link rel="shortcut icon" type="image/jpg" href="favicon.png" />
   </head>
   <body>
     <section class="container app-container">
@@ -274,7 +348,27 @@
         <div class="app-details">
           <span class="app-status success">&#9679; Running</span>
           <h1 class="app-name">TeamSpeak Server</h1>
-          <h2>Privilege Key: <code>${PRIVILEGE_KEY}</code></h2>
+          <h2>
+            Privilege Key:
+            <button class="copy-button" onclick="copyPrivilegeKey()">
+              <code id="privilege-key">${PRIVILEGE_KEY}</code>
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 15C4.06812 15 3.60218 15 3.23463 14.8478C2.74458 14.6448 2.35523 14.2554 2.15224 13.7654C2 13.3978 2 12.9319 2 12V5.2C2 4.0799 2 3.51984 2.21799 3.09202C2.40973 2.71569 2.71569 2.40973 3.09202 2.21799C3.51984 2 4.0799 2 5.2 2H12C12.9319 2 13.3978 2 13.7654 2.15224C14.2554 2.35523 14.6448 2.74458 14.8478 3.23463C15 3.60218 15 4.06812 15 5M12.2 22H18.8C19.9201 22 20.4802 22 20.908 21.782C21.2843 21.5903 21.5903 21.2843 21.782 20.908C22 20.4802 22 19.9201 22 18.8V12.2C22 11.0799 22 10.5198 21.782 10.092C21.5903 9.71569 21.2843 9.40973 20.908 9.21799C20.4802 9 19.9201 9 18.8 9H12.2C11.0799 9 10.5198 9 10.092 9.21799C9.71569 9.40973 9.40973 9.71569 9.21799 10.092C9 10.5198 9 11.0799 9 12.2V18.8C9 19.9201 9 20.4802 9.21799 20.908C9.40973 21.2843 9.71569 21.5903 10.092 21.782C10.5198 22 11.0799 22 12.2 22Z"
+                  stroke="rgba(255, 255, 255, 0.15)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </h2>
         </div>
       </div>
       <p class="text-muted">Your TeamSpeak Server is successfully running!</p>
@@ -287,5 +381,27 @@
         Umbrel running.
       </p>
     </section>
+    <div id="toast" class="toast">Privilege Key copied to clipboard!</div>
+    <script>
+      function copyPrivilegeKey() {
+        const privilegeKey = document.getElementById("privilege-key").innerText;
+        const textarea = document.createElement("textarea");
+        textarea.value = privilegeKey;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+
+        showToast();
+      }
+
+      function showToast() {
+        const toast = document.getElementById("toast");
+        toast.className = "toast show";
+        setTimeout(() => {
+          toast.className = "toast";
+        }, 3000);
+      }
+    </script>
   </body>
 </html>
