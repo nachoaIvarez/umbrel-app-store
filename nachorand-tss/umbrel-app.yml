@@ -1,24 +1,28 @@
 manifestVersion: 1
 id: nachorand-tss
 port: 8326
-name: TeamSpeak Server
+name: TeamSpeak
 tagline: TeamSpeak Server in Umbrel
-icon: https://teamspeak.com/user/themes/teamspeak/images/favicon.png
+icon: https://raw.githubusercontent.com/nachoaIvarez/umbrel-app-store/web/icon.png
 category: Social
-version: "0.0.9"
+version: "1.0.0"
 description: >-
-  Use crystal clear sound to communicate with your team mates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.
-developer: Nacho
+  Extremly resource efficent, crystal clear sound to communicate with your team mates cross-platform with military-grade security, lag-free performance & unparalleled reliability and uptime.
+
+  The preferred option by esports professionals.
+developer: Nacho Álvarez
 website: https://nachoalvarez.dev
-submitter: Nacho
+submitter: Nacho Álvarez
 submission: https://github.com/nachoaIvarez/umbrel-app-store
 repo: https://github.com/nachoaIvarez/umbrel-app-store
 support: https://github.com/nachoaIvarez/umbrel-app-store/issues
 gallery:
-  - https://upload.wikimedia.org/wikipedia/commons/b/be/TeamSpeak_3.5.5_on_Windows_10.png
+  - https://raw.githubusercontent.com/nachoaIvarez/umbrel-app-store/web/banner.png
 releaseNotes: >-
-  Add web entry-point for Umbrel with Privilege Key and port instructions.
+  Intial release 1.0.0:
+
+  It includes two services, one runs the server, the other creates an Umbrel app to visualize the server status and access the Privilege Key to use in TeamSpeak Client.
 dependencies: []
 path: ""
 defaultUsername: ""
-deterministicPassword: true
+defaultPassword: ""
